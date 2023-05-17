@@ -3,7 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 import React from "react";
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
+  const client = await db.connect();
+
+  try {
+    await client.sql`CREATE TABLE Todos (id serail, varchar(255));`;
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "somthing went wrong" });
+  }
   return NextResponse.json({ message: "You Called this API" });
 }
 
