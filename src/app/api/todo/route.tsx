@@ -29,12 +29,17 @@ export async function POST(request: NextRequest) {
 
   try {
     if (req.task) {
-      const res = db.insert(todoTable).values({
-        task: req.task,
-      });
+      const res = await db
+        .insert(todoTable)
+        .values({
+          task: req.task,
+        })
+        .returning();
       // console.log((await res).rowCount);
-      console.log(req.task);
-      return NextResponse.json({ message: `New Task '${req.task}' Added` });
+      console.log(res);
+      return NextResponse.json({
+        message: `New Task '${req.task}' Added`,
+      });
     } else throw new Error("Task cannot be blank");
   } catch (error) {
     return NextResponse.json({
