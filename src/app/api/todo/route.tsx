@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     await sql`CREATE TABLE IF NOT EXISTS Todos (id serial, Task varchar(255));`;
     const res = await db.select().from(todoTable);
 
-    console.log(res[0].task);
+    // console.log(res[0].task);
     return NextResponse.json({ data: res });
   } catch (err) {
     // console.log(err);
@@ -32,9 +32,9 @@ export async function POST(request: NextRequest) {
       const res = db.insert(todoTable).values({
         task: req.task,
       });
-      console.log((await res).rowCount);
+      // console.log((await res).rowCount);
       console.log(req.task);
-      return NextResponse.json({ message: `New Task ${req.task} Added` });
+      return NextResponse.json({ message: `New Task '${req.task}' Added` });
     } else throw new Error("Task cannot be blank");
   } catch (error) {
     return NextResponse.json({
@@ -72,7 +72,7 @@ export async function PUT(request: NextRequest) {
       throw new Error("Task ID and task content are required");
     }
   } catch (error) {
-    console.log(error as { message: string });
+    // console.log(error as { message: string });
     return NextResponse.json({
       message: (error as { message: string }).message,
     });
@@ -99,7 +99,7 @@ export async function DELETE(request: NextRequest) {
       .from(todoTable)
       .where(eq(todoTable.id, numericId))
       .limit(1);
-    console.log(existingTask);
+    // console.log(existingTask);
     if (existingTask.length === 0) {
       return NextResponse.json(
         {
@@ -110,10 +110,10 @@ export async function DELETE(request: NextRequest) {
     }
 
     await db.delete(todoTable).where(eq(todoTable.id, numericId));
-    console.log(`Task deleted with ID ${numericId}`);
+    // console.log(`Task deleted with ID ${numericId}`);
     return NextResponse.json({ message: `Task deleted with ID ${numericId}` });
   } catch (error) {
-    console.log(error as { message: string });
+    // console.log(error as { message: string });
     return NextResponse.json(
       {
         message: (error as { message: string }).message,
