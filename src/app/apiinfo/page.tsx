@@ -17,7 +17,7 @@ export default function apiinfo() {
       <h2 className="text-xl font-bold">Todo api</h2> <br />
       <ul>
         <li>
-          <Link href="/api/todo/list" className="font-bold">
+          <Link href="/api/todo" className="font-bold">
             GET /api/todo
           </Link>
         </li>{" "}

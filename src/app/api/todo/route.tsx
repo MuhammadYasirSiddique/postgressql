@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Todo, newTodo, todoTable, db } from "@/lib/drizzle";
+import { Todo, NewTodo, todoTable, db } from "@/lib/drizzle";
 import { sql } from "@vercel/postgres";
 
 import React from "react";
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: res });
   } catch (err) {
     // console.log(err);
-    console.log((err as { message: string }).message);
+    // console.log((err as { message: string }).message);
     return NextResponse.json({ message: "something went wrong" });
   }
 }
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         })
         .returning();
       // console.log((await res).rowCount);
-      console.log(res);
+      // console.log(res);
       return NextResponse.json({
         message: `New Task '${req.task}' Added`,
       });
